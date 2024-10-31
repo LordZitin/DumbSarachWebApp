@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=360, initial-scale=1.0">
+    <title>Your Page Title</title>
+    <meta name="description" content="Pick a chit and try to tell your game mates the name of bollywood movie or song from the chit only by your non vocal acting skills.">
+    <meta name="author" content="Nitish and Pritish Kumar Barman">
+    <meta name="keywords" content="dumbsharas, dumbseras, dumb sharas, dumb serasm, DumbSarach">
+    <meta property="og:title" content="DumbSarach">
+    <meta property="og:description" content="A game to spend quality time with your family and friends.">
+    <meta property="og:image" content="logo1.png">
+    <meta property="og:url" content="https://github.com/LordZitin">
+    <meta property="og:type" content="github profile">
+  <title>DumbSarach</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #333;
+      color: #fff;
+      text-align: center;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 50px;
+    }
+    .button {
+      padding: 10px 20px;
+      margin: 10px;
+      background-color: #6200ea;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+    #countdown_label {
+      font-size: 1.5em;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1><img src="logo1.png" alt="DumbSarach"></h1>
+    <h2 id="trivia_label">Trivia will appear here</h2>
+    <button id="pickAnotherButton" class="button">Pick Another Name</button>
+    <div id="countdown_label">Time left: 90 seconds</div>
+    <button id="pauseButton" class="button">PAUSE</button>
+    <button id="exitButton" class="button">EXIT</button>
+  </div>
+
+  <script>
+    const moviesSongs = [
+      'Sholay', 'Dilwale Dulhania Le Jayenge', 'Lagaan', 'Taare Zameen Par', 
+      'The Lunchbox', 'Kuch Kuch Hota Hai', 'Veer-Zaara', 'Dabangg', 
+      '3 Idiots', 'Kabhi Khushi Kabhie Gham', 'My Name Is Khan', 
+      'Om Shanti Om', 'Rang De Basanti', 'Jab We Met', 'Rock On!!', 
+      'Fashion', 'Dostana', 'Golmaal', 'Singham', 'Chak De India',  
+      'Hum Dil De Chuke Sanam', 'Devdas', 'Kaho Naa... Pyaar Hai', 
+      'Mission Kashmir', 'Guru', 'Bunty Aur Babli', 'Fanaa', 
+      'Dhoom 2', 'Om Jai Jagdish Hare', 'Kal Ho Naa Ho', 
+      'Jai Ho', 'Chaiyya Chaiyya', 'Dil To Pagal Hai', 
+      'Tum Hi Ho', 'Sun Saathiya', 'Abhi Mujh Mein Kahin', 
+      'Senorita', 'Zara Sa Jhoom Loon Main', 'Radha',
+      'Masti Ki Pathshala', 'Khuda Jaane', 'Balam Pichkari', 
+      'Badtameez Dil', 'Lag Jaa Gale', 'Mere Haathon Mein', 'Chhookar Mere Mann Ko'
+    ];
+    
+    let countdownInterval;
+    let countdownTime = 90;
+
+    function startCountdown(time) {
+      countdownTime = time;
+      clearInterval(countdownInterval);
+      countdownInterval = setInterval(() => {
+        document.getElementById("countdown_label").textContent = `Time left: ${countdownTime} seconds`;
+        if (countdownTime <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("countdown_label").textContent = "Time's up!";
+          playSound('bell.wav');
+        } else {
+          countdownTime -= 1;
+        }
+      }, 1000);
+    }
+
+    function showTrivia() {
+      const randomMovie = moviesSongs[Math.floor(Math.random() * moviesSongs.length)];
+      document.getElementById("trivia_label").textContent = randomMovie;
+      startCountdown(90);
+    }
+
+    function playSound(file) {
+      const sound = new Audio(file);
+      sound.play();
+    }
+
+    document.getElementById("pauseButton").addEventListener("click", () => {
+      playSound('click.wav');
+      showTrivia();
+    });
+
+    document.getElementById("pickAnotherButton").addEventListener("click", () => {
+      playSound('click.wav');
+      showTrivia();
+    });
+
+    document.getElementById("exitButton").addEventListener("click", () => {
+      playSound('exit.wav');
+      if (confirm("Are you sure you want to exit?")) {
+        window.close();
+      }
+    });
+  </script>
+</body>
+</html>
